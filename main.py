@@ -10,6 +10,15 @@ class Main:
             pass ## While we can't login, fuck everything else and retry.
 
         ####
+        ## This is what I want to be able to do. This friggin' easy.
+        ####
+        # self.GZL.startup()
+        # while(True):
+        #     Pos = self.GZL.get_position()
+        #     Sel_Mob = self.GZL.get_nearest_monster(Pos)
+        #     self.GZL.attack(Sel_Mob)
+
+        ####
         ## NO PACKET HANDLING IN MAIN CLASS MATT, BAD IDEA FUCKER
         ####
         # self.GZL.PH.Send("<msg t='sys'><body action='verChk' r='0'><ver v='141' /></body></msg>" + chr(0))
