@@ -10,6 +10,12 @@ class GaiaZomgLib:
         GSI = HOMEPAGE + "chat/gsi/index.php"
         LOGIN_PAGE = HOMEPAGE + "auth/login/"
 
+    class Monster:
+        ID = ""
+        Name = ""
+        Position = { "map_name": "", "x": 0, "y": 0 }
+        Level = 0
+
     def __init__(self):
         self.username = ""
         self.password = ""
@@ -60,6 +66,35 @@ class GaiaZomgLib:
         else:
             self.LoggedIn = False
             return False
+
+    def startup(self):
+        if(self.LoggedIn == False):
+            return False
+
+        ####
+        ## Need to send the following packets, which require the packet id after
+        ####
+
+        #######
+        ##
+        ## Login Packet; 
+        ## {'args': {'cmd': u'playerInfo', 'parameters': None}, 'type': 1, 'name': u'battleCommand', 'cid': self.GetNewCID()}, Encode=True
+        ##
+        ###
+        ### After Reply From playerInfo:
+        ###
+        ### {'args': {'cmd': u'getNkvp', 'parameters': {'keys': [u'musicVolume', u'soundVolume', u'musicState']}}, 'type': 1, 'name': u'battleCommand', 'cid': self.GetNewCID()}, Encode=True)
+        ### {'args': {'cmd': u'clientFlashStats', 'parameters': {'os': u'Windows 7', 'flashVersion': u'WIN 11,1,102,62', 'screenResolutionY': 900, 'screenResolutionX': 1600}}, 'type': 1, 'name': u'battleCommand', 'cid': self.GetNewCID()}, Encode=True)
+        ####
+        #### After Reply From getInventoryInfo
+        #### 
+        #### {'args': {'cmd': u'version', 'parameters': {}}, 'type': 1, 'name': u'battleCommand', 'cid': self.GetNewCID()}, Encode=True)
+        #####
+        ##### After Reply From version
+        #####
+        ##### {'args': {'cmd': u'getGlobals', 'parameters': {}}, 'type': 1, 'name': u'battleCommand', 'cid': self.GetNewCID()}, Encode=True)
+        #######
+
 
     def send_chat(self, message):
         return False

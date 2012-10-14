@@ -11,3 +11,7 @@ class GSI:
         Split1 = Page.rsplit(chr(5))
         Split2 = Split1[len(Split1)-1].rsplit(chr(1))
         return Split2[len(Split2)-1]
+
+    def get_zomg_servers(self, gsid):
+        Page = self.fetch_gsi(v="json", m='[[1205,["' + gsid + '","zomg"]]]')
+        return Page

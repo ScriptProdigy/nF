@@ -8,13 +8,15 @@ class PacketHandler:
 
     class PacketDefs:
         class Recv:
-
+            pass
 
         class Send:
-
+            pass
+            
     def __init__(self, GaiaZomgLib, IP='208.85.93.217', PORT=8080):
         self.GaiaZomgLib = GaiaZomgLib
         self.TCP = TCP.TCPClient(IP, PORT, 1024) 
+        self.CID = 1
 
     def Send(self, Data, Encode=False):  ## Send as Dict or Str ! :D Auto makes it json string if Encode is true and Data is dict
         Pkt = Data
@@ -25,6 +27,9 @@ class PacketHandler:
         #print "SENDING " + Pkt
         self.TCP.SendPacket(Pkt)
         return Pkt
+
+    def decode_packet(self, data):
+        pass
 
     def B64_to_AMF3(self, Packet):
         AMF3 = pyamf.encode(Packet,encoding=3).read()
