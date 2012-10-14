@@ -1,10 +1,10 @@
 
-class Event(IEvent):
+class Event:
     def __init__(self):
         self.handlers = set()
 
     def handle(self, handler):
-        self.handler.add(handler)
+        self.handlers.add(handler)
         return self
 
     def unhandle(self, handler):

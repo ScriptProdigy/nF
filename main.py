@@ -1,5 +1,4 @@
 from lib import GZL
-from Event import Event
 from getpass import getpass
 
 class Main:
@@ -10,11 +9,11 @@ class Main:
         while(self.GZL.login("TheManx2", getpass("Password: ")) == False):
             pass ## While we can't login, fuck everything else and retry.
 
-        print self.GZL.GSI.get_zomg_servers(self.GZL.GSid)
+        #print self.GZL.GSI.get_zomg_servers(self.GZL.GSid)
         ####
         ## This is what I want to be able to do. This friggin' easy.
         ####
-        # self.GZL.startup()
+        self.GZL.startup()
         # while(True):
         #     Pos = self.GZL.get_position()
         #     Sel_Mob = self.GZL.get_nearest_monster(Pos)

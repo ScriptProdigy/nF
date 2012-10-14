@@ -1,5 +1,9 @@
+import time
+import hashlib
+
 from PacketHandling import PH
 from GSI import GSI
+from Event import Event
 import HttpWrapper
 
 class GaiaZomgLib:
@@ -25,6 +29,11 @@ class GaiaZomgLib:
         self.HTTP = HttpWrapper.HTTPWrapper()
         self.GSI = GSI.GSI(self)
         self.PH = PH.PacketHandler(self)
+
+        self.PH.event_packet_decoded += self.run_on_packet_decoded
+
+    def run_on_packet_decoded(self, Packet):
+        print "Decoded Packet Event: " + str(Packet)
 
     def login(self, Username, Password):
         self.username = Username
@@ -62,6 +71,7 @@ class GaiaZomgLib:
         if('View or change your Account Settings' in Login_Req):
             self.LoggedIn = True
             self.GSid = self.GSI.get_gsid()
+            self.PH.Connect()
             return True
         else:
             self.LoggedIn = False
@@ -94,6 +104,15 @@ class GaiaZomgLib:
         #####
         ##### {'args': {'cmd': u'getGlobals', 'parameters': {}}, 'type': 1, 'name': u'battleCommand', 'cid': self.GetNewCID()}, Encode=True)
         #######
+
+        self.PH.Send("<msg t='sys'><body action='verChk' r='0'><ver v='141' /></body></msg>" + chr(0))
+
+        md5obj = hashlib.md5()
+        data = str(str(self.GSid) + str(int(time.time())))
+        md5obj.update(data)
+        self.PH.Send("<msg t='sys'><body action='login' r='0'><login z='battle'><nick><![CDATA[" + str(md5obj.hexdigest()) + "_zomg]]></nick><pword><![CDATA[" + self.GSid + "]]></pword></login></body></msg>")
+
+        self.PH.Send({'args': {'cmd': u'playerInfo', 'parameters': None}, 'type': 1, 'name': u'battleCommand', 'cid': self.PH.new_cid()}, Encode=True)
 
 
     def send_chat(self, message):
